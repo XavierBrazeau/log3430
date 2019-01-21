@@ -35,15 +35,15 @@ class JsonClientTest {
 
 	//TODO: Déclarer vos variables, mocks, stub ou spies ici
 	//La librairie mockito ainsi que d'autres dépendances utiles ont été importé pour vous
-	private final static String KEY = "d3b35a4fecdfc0ebd653b6e15bc416d9";
-	private final static String TOKEN = "7eabc81ac1359be1bebb364c43fb1bad900f8239204587eedce6143e74301e54";
-	private final static String ENDPOINT = "https://api.trello.com/1/";
-	private final static String BOARD_ID = "5c41de91317c6b28c2db0a6e";
+	private final static String KEY = "12";
+	private final static String TOKEN = "123";
+	private final static String ENDPOINT = "localhost";
+	private final static String BOARD_ID = "1234";
 	
 	private static TrelloJsonClient jsonClient;
 	TrelloJsonClient trelloJsonClientSpy;
 	StatusLine mockStatusLine;
-	HttpEntity mockHttpEntity;
+	CloseableHttpResponse mockCloseableHttpResponse;
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -51,7 +51,7 @@ class JsonClientTest {
 		jsonClient = new TrelloJsonClient(ENDPOINT, KEY, TOKEN);
 		trelloJsonClientSpy = Mockito.spy(jsonClient);
 		mockStatusLine = Mockito.mock(StatusLine.class);
-		mockHttpEntity = Mockito.mock(HttpEntity.class);
+		mockCloseableHttpResponse = Mockito.mock(CloseableHttpResponse.class);
 	}
 
 	@AfterEach
@@ -65,9 +65,12 @@ class JsonClientTest {
 		//Vérifier qu'il s'agit bien d'une requête de type GET
 		//Vérifier l'URL de la requête
 		//Vérifier le résultat retourné par la requête
-		Mockito.when(mockStatusLine.getStatusCode()).thenReturn(200);
+		HttpEntity expectedEntity = new StringEntity("{json}");
+		//String expectedString = EntityUtils.toString(expectedEntity, "UTF-8");
+		String expectedString = "{json}";
 		
-		//Mockito.when(mockHttpEntity.ge).thenReturn(200);
+		Mockito.when(mockStatusLine.getStatusCode()).thenReturn(200);
+		Mockito.when(mockCloseableHttpResponse.getEntity()).thenReturn(expectedEntity);
 		
 		String result;
 		try
@@ -79,6 +82,7 @@ class JsonClientTest {
 			assertNull(e);
 		}
 		
+		assertTrue(result.equals(expectedString));
 	}
 	
 	@Test
