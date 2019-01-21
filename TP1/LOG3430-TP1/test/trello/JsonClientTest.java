@@ -9,6 +9,7 @@ import org.apache.http.ParseException;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicStatusLine;
 import org.junit.jupiter.api.AfterEach;
@@ -44,6 +45,8 @@ class JsonClientTest {
 	TrelloJsonClient trelloJsonClientSpy;
 	StatusLine mockStatusLine;
 	CloseableHttpResponse mockCloseableHttpResponse;
+	String mockurl;
+	CloseableHttpClient mockHttpClient;
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -52,6 +55,8 @@ class JsonClientTest {
 		trelloJsonClientSpy = Mockito.spy(jsonClient);
 		mockStatusLine = Mockito.mock(StatusLine.class);
 		mockCloseableHttpResponse = Mockito.mock(CloseableHttpResponse.class);
+		mockurl = "http://test.com";
+		mockHttpClient= Mockito.mock(CloseableHttpClient.class);
 	}
 
 	@AfterEach
@@ -65,24 +70,35 @@ class JsonClientTest {
 		//Vérifier qu'il s'agit bien d'une requête de type GET
 		//Vérifier l'URL de la requête
 		//Vérifier le résultat retourné par la requête
-		HttpEntity expectedEntity = new StringEntity("{json}");
+		
+		try 
+		{
+			HttpEntity expectedEntity= new StringEntity("{json}");
+			Mockito.when(mockStatusLine.getStatusCode()).thenReturn(200);
+			Mockito.when(mockCloseableHttpResponse.getEntity()).thenReturn(expectedEntity);
+			URI uri = new URI(ENDPOINT + "?key=" + KEY + "&token=" + TOKEN);
+			doReturn(mockCloseableHttpResponse).when(mockHttpClient).execute(aHttpGetRequestWithUriMatching(uri));
+		}
+		catch(Exception e)
+		{
+			
+		}
+		
 		//String expectedString = EntityUtils.toString(expectedEntity, "UTF-8");
+		
 		String expectedString = "{json}";
-		
-		Mockito.when(mockStatusLine.getStatusCode()).thenReturn(200);
-		Mockito.when(mockCloseableHttpResponse.getEntity()).thenReturn(expectedEntity);
-		
-		String result;
 		try
 		{
-			result = Mockito.verify(trelloJsonClientSpy).getBoardCards(BOARD_ID);
+			//String result = Mockito.verify(trelloJsonClientSpy).getBoardCards(BOARD_ID);
+			String result = jsonClient.getBoardCards(BOARD_ID);
+			assertTrue(result.equals(expectedString));
 		}
 		catch (ParseException | TrelloException | IOException e)
 		{
 			assertNull(e);
 		}
 		
-		assertTrue(result.equals(expectedString));
+		
 	}
 	
 	@Test
