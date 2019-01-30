@@ -39,21 +39,37 @@ class JsonClientTest {
 	//La librairie mockito ainsi que d'autres dépendances utiles ont été importé pour vous
 	private final static String KEY = "12";
 	private final static String TOKEN = "123";
-	private final static String ENDPOINT = "localhost";
+	private final static String ENDPOINT = "https://localhost/";
 	private final static String BOARD_ID = "1234";
 	
 	private static TrelloJsonClient jsonClient;
-	TrelloJsonClient trelloJsonClientSpy;
+	TrelloJsonClient client;
+	RequestWrapper wrapper;
 	StatusLine mockStatusLine;
+	CloseableHttpClient mockCloseableHttpClient;
 	CloseableHttpResponse mockCloseableHttpResponse;
+	String mockURL;
+	URI mockURI;
+	HttpEntity expectedEntity;
+	String expectedString;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		//TODO: Initiliser vos objets, mocks, etc ici
-		jsonClient = new TrelloJsonClient(ENDPOINT, KEY, TOKEN);
-		trelloJsonClientSpy = Mockito.spy(jsonClient);
+		
+		mockURL = ENDPOINT + "boards/" + BOARD_ID + "/cards/";
+		mockURI = new URI(mockURL + "?key=" + KEY +"&token=" + TOKEN);
+		client = new TrelloJsonClient(ENDPOINT, KEY, TOKEN);
 		mockStatusLine = Mockito.mock(StatusLine.class);
 		mockCloseableHttpResponse = Mockito.mock(CloseableHttpResponse.class);
+		mockCloseableHttpClient = Mockito.mock(CloseableHttpClient.class);
+		wrapper = new RequestWrapper(KEY, TOKEN);
+
+		
+		expectedString = "{json}";
+		
+		expectedEntity = new StringEntity(expectedString);
+		
 	}
 
 	@AfterEach
@@ -68,29 +84,19 @@ class JsonClientTest {
 		//Vérifier l'URL de la requête
 		//Vérifier le résultat retourné par la requête
 		try {
-			HttpEntity expectedEntity = new StringEntity("{json}");
-		}
-		catch (Exception e) {
+			final int OK = 200;
+			Mockito.when(mockCloseableHttpResponse.getStatusLine()).thenReturn(mockStatusLine);
+			Mockito.when(mockStatusLine.getStatusCode()).thenReturn(OK);
+			doReturn(mockCloseableHttpResponse).when(mockCloseableHttpClient).execute(aHttpGetRequestWithUriMatching(mockURI));
 			
-		}
+			Mockito.when(mockCloseableHttpResponse.getEntity()).thenReturn(expectedEntity);
+
+			client.setRequestWrapper(wrapper);
+			wrapper.setHttpClient(mockCloseableHttpClient);
+			
+			assertEquals(expectedString, client.getBoardCards(BOARD_ID));
+		} catch(Exception e) {}
 		
-		//String expectedString = EntityUtils.toString(expectedEntity, "UTF-8");
-		String expectedString = "{json}";
-		
-		Mockito.when(mockStatusLine.getStatusCode()).thenReturn(200);
-		Mockito.when(mockCloseableHttpResponse.getEntity()).thenReturn(expectedEntity);
-		
-		String result;
-		try
-		{
-			result = Mockito.verify(trelloJsonClientSpy).getBoardCards(BOARD_ID);
-		}
-		catch (ParseException | TrelloException | IOException e)
-		{
-			assertNull(e);
-		}
-		
-		assertTrue(result.equals(expectedString));
 	}
 	
 	@Test
@@ -99,17 +105,28 @@ class JsonClientTest {
 		//Vérifier qu'il s'agit bien d'une requête de type GET
 		//Vérifier l'URL de la requête
 		//Vérifier que la méthode lance une exception
+		final Integer BAD_REQUEST = 400;
+		try {
+			Mockito.when(mockCloseableHttpResponse.getStatusLine()).thenReturn(mockStatusLine);
+			Mockito.when(mockStatusLine.getStatusCode()).thenReturn(BAD_REQUEST);
+			doReturn(mockCloseableHttpResponse).when(mockCloseableHttpClient).execute(aHttpGetRequestWithUriMatching(mockURI));
+			Mockito.when(mockCloseableHttpResponse.getEntity()).thenReturn(expectedEntity);
+
+			
+			client.setRequestWrapper(wrapper);
+			wrapper.setHttpClient(mockCloseableHttpClient);
+			
+			client.getBoardCards(BOARD_ID);
+		} catch(TrelloException e) {
+			assertEquals(e.getCode(), BAD_REQUEST.toString());
+			assertEquals(expectedString, e.getResponseContent());
+		} catch(Exception e) {}
 	}
 	
 	//TODO: Décommenter cette méthode et l'implémenter
 	private HttpGet aHttpGetRequestWithUriMatching(URI expected) {
 		//TODO: utiliser la classe HttpGetMatcher��
-		HttpGetMatcher httpGetMatcher = new HttpGetMatcher(expected);
-		
-		HttpGet httpGet = new HttpGet(ENDPOINT + "?key=" + KEY + "&token=" + TOKEN);
-		
-		assertTrue(httpGetMatcher.matches(httpGet));
-		return httpGet;
+		return argThat(new HttpGetMatcher(expected));
 		
 	}
 
