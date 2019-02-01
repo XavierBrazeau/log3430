@@ -14,6 +14,7 @@ class TestECGraphGenerator {
 	int vertex1;
 	int vertex2;
 	int edges;
+	int k;
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -24,7 +25,7 @@ class TestECGraphGenerator {
 	}
 
 	//Method tested: eulerianCycle
-	//Case: <{V: -1, E: e >= v }, {error}>
+	//Case: <{V: v < 0, E: e >= v }, {error}>
 	@Test
 	void rejectNegativeVertexLessThanEdges() {
 		vertex1 = -1;
@@ -35,7 +36,7 @@ class TestECGraphGenerator {
 	//Method tested: eulerianCycle
 	//Case: <{V: v > 0, E: e < V}, {Graph with eulerian cycle}>
 	@Test
-	void rejectLessEdgeThanPositiveVertex() {
+	void acceptPositiveVertexLessEdges() {
 		vertex1 = 5;
 		edges = 4;
 		Graph graph = GraphGenerator.eulerianCycle(vertex1, edges);
@@ -72,7 +73,7 @@ class TestECGraphGenerator {
 	@Test
 	void rejectNegativeDegreesWithValidVertex() {
 		vertex1 = 2;
-		edges = -1;
+		k = -1;
 		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.bipartite(vertex1, vertex2, edges), "L'erreur n'a pas été lancée.");
 	}
 	
@@ -81,7 +82,7 @@ class TestECGraphGenerator {
 	@Test
 	void rejectNegativeDegreesWithImpairVertex() {
 		vertex1 = 1;
-		edges = -1;
+		k = -1;
 		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.bipartite(vertex1, vertex2, edges), "L'erreur n'a pas été lancée.");
 	}
 	
@@ -90,7 +91,7 @@ class TestECGraphGenerator {
 	@Test
 	void rejectNegativeDegreesWithTooSmallVertex() {
 		vertex1 = -2;
-		edges = -1;
+		k = -1;
 		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.bipartite(vertex1, vertex2, edges), "L'erreur n'a pas été lancée.");
 	}
 	
@@ -99,7 +100,7 @@ class TestECGraphGenerator {
 	@Test
 	void rejectPositiveDegreesWithTooSmallImpairVertex() {
 		vertex1 = 1;
-		edges = 3;
+		k = 3;
 		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.bipartite(vertex1, vertex2, edges), "L'erreur n'a pas été lancée.");
 	}
 }
