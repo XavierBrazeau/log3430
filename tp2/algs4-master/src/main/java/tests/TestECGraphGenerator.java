@@ -74,7 +74,7 @@ class TestECGraphGenerator {
 	void rejectNegativeDegreesWithValidVertex() {
 		vertex1 = 2;
 		k = -1;
-		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.bipartite(vertex1, vertex2, edges), "L'erreur n'a pas été lancée.");
+		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.regular(vertex1, k), "L'erreur n'a pas été lancée.");
 	}
 	
 	//Method tested: regular
@@ -83,7 +83,7 @@ class TestECGraphGenerator {
 	void rejectNegativeDegreesWithImpairVertex() {
 		vertex1 = 1;
 		k = -1;
-		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.bipartite(vertex1, vertex2, edges), "L'erreur n'a pas été lancée.");
+		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.regular(vertex1, k), "L'erreur n'a pas été lancée.");
 	}
 	
 	//Method tested: regular
@@ -92,7 +92,7 @@ class TestECGraphGenerator {
 	void rejectNegativeDegreesWithTooSmallVertex() {
 		vertex1 = -2;
 		k = -1;
-		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.bipartite(vertex1, vertex2, edges), "L'erreur n'a pas été lancée.");
+		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.regular(vertex1, k), "L'erreur n'a pas été lancée.");
 	}
 	
 	//Method tested: regular
@@ -101,6 +101,6 @@ class TestECGraphGenerator {
 	void rejectPositiveDegreesWithTooSmallImpairVertex() {
 		vertex1 = 1;
 		k = 3;
-		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.bipartite(vertex1, vertex2, edges), "L'erreur n'a pas été lancée.");
+		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.regular(vertex1, k), "L'erreur n'a pas été lancée.");
 	}
 }
