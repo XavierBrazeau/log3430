@@ -31,7 +31,7 @@ import utils.HttpGetMatcher;
 import utils.RequestWrapper;
 import utils.TrelloException;
 
-import org.apache.http.entity.StringEntity; //import rajouté manuellement 
+import org.apache.http.entity.StringEntity; //import rajouté manuellement
 
 class JsonClientTest {
 
@@ -41,8 +41,7 @@ class JsonClientTest {
 	private final static String TOKEN = "123";
 	private final static String ENDPOINT = "https://localhost/";
 	private final static String BOARD_ID = "1234";
-	
-	private static TrelloJsonClient jsonClient;
+
 	TrelloJsonClient client;
 	RequestWrapper wrapper;
 	StatusLine mockStatusLine;
@@ -52,11 +51,11 @@ class JsonClientTest {
 	URI mockURI;
 	HttpEntity expectedEntity;
 	String expectedString;
-	
+
 	@BeforeEach
 	void setUp() throws Exception {
 		//TODO: Initiliser vos objets, mocks, etc ici
-		
+
 		mockURL = ENDPOINT + "boards/" + BOARD_ID + "/cards/";
 		mockURI = new URI(mockURL + "?key=" + KEY +"&token=" + TOKEN);
 		client = new TrelloJsonClient(ENDPOINT, KEY, TOKEN);
@@ -65,11 +64,11 @@ class JsonClientTest {
 		mockCloseableHttpClient = Mockito.mock(CloseableHttpClient.class);
 		wrapper = new RequestWrapper(KEY, TOKEN);
 
-		
+
 		expectedString = "{json}";
-		
+
 		expectedEntity = new StringEntity(expectedString);
-		
+
 	}
 
 	@AfterEach
@@ -88,17 +87,17 @@ class JsonClientTest {
 			Mockito.when(mockCloseableHttpResponse.getStatusLine()).thenReturn(mockStatusLine);
 			Mockito.when(mockStatusLine.getStatusCode()).thenReturn(OK);
 			doReturn(mockCloseableHttpResponse).when(mockCloseableHttpClient).execute(aHttpGetRequestWithUriMatching(mockURI));
-			
+
 			Mockito.when(mockCloseableHttpResponse.getEntity()).thenReturn(expectedEntity);
 
 			client.setRequestWrapper(wrapper);
 			wrapper.setHttpClient(mockCloseableHttpClient);
-			
+
 			assertEquals(expectedString, client.getBoardCards(BOARD_ID));
 		} catch(Exception e) {}
-		
+
 	}
-	
+
 	@Test
 	public void testGetBoardCardsError() {
 		//TODO: tester l'échec de la requête
@@ -112,22 +111,22 @@ class JsonClientTest {
 			doReturn(mockCloseableHttpResponse).when(mockCloseableHttpClient).execute(aHttpGetRequestWithUriMatching(mockURI));
 			Mockito.when(mockCloseableHttpResponse.getEntity()).thenReturn(expectedEntity);
 
-			
+
 			client.setRequestWrapper(wrapper);
 			wrapper.setHttpClient(mockCloseableHttpClient);
-			
+
 			client.getBoardCards(BOARD_ID);
 		} catch(TrelloException e) {
 			assertEquals(e.getCode(), BAD_REQUEST.toString());
 			assertEquals(expectedString, e.getResponseContent());
 		} catch(Exception e) {}
 	}
-	
+
 	//TODO: Décommenter cette méthode et l'implémenter
 	private HttpGet aHttpGetRequestWithUriMatching(URI expected) {
 		//TODO: utiliser la classe HttpGetMatcher��
 		return argThat(new HttpGetMatcher(expected));
-		
+
 	}
 
 }
