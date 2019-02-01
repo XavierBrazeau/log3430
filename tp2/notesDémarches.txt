@@ -11,6 +11,8 @@ Graphes réguliers: tous sommets même #voisins
 Graphe: #vertex, #edges
 COnnexe: chemin entre deux vertex existe
 Partition : non-vide
+Methods can return non connexe graph
+
 eulerian
 Contraintes : 
 1) E >= V || E = 0
@@ -32,3 +34,5 @@ Partitions
 V {VK pair && V >= k+1, VK pair && V < k+1,
    VK impair && V >= k+1, VK impair && V < k+1}
 k {négatif, positif/nul}
+
+Error IllegalArgumentException : https://docs.oracle.com/javase/8/docs/api/?java/lang/Error.html
