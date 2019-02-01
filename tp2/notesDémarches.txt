@@ -1,0 +1,34 @@
+LOG3430 - TP2
+
+Méthode eulerianCycle
+
+V = vertex = #sommets
+E = edge = #arcs
+
+Rappel : EulerianCycle : Passer par tous les arcs et revenir au point de départ.
+
+Graphes réguliers: tous sommets même #voisins
+Graphe: #vertex, #edges
+COnnexe: chemin entre deux vertex existe
+Partition : non-vide
+eulerian
+Contraintes : 
+1) E >= V || E = 0
+2) V > 0
+3) deg(all V) = pair
+
+Bipartie:
+1) V1 > 0
+2) V2 > 0
+3) E >= 0
+4) voisins autre partition
+
+Régulier
+1) V > 0 : Inutile
+2) k >= 0
+3) deg(all v) = k
+4) nécessaire et suffisante : V*k pair ET V >= k + 1 
+Partitions
+V {VK pair && V >= k+1, VK pair && V < k+1,
+   VK impair && V >= k+1, VK impair && V < k+1}
+k {négatif, positif/nul}

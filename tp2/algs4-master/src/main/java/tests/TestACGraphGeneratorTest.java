@@ -1,4 +1,4 @@
-package edu.princeton.cs.algs4;
+package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TestECGraphGenerator {
+class TestACGraphGeneratorTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
