@@ -124,16 +124,7 @@ class TestACGraphGeneratorTest {
 		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.bipartite(vertex1, vertex2, edges), "L'erreur n'a pas été lancée.");
 	}
 	
-	//Method tested: bipartite
-	//Case: <{V1: v > 0. V2: v > 0, E: e >= 0}, {error}>
-	@Test
-	void rejectPositiveVertexPositiveEdges() {
-		vertex1 = 1;
-		vertex2 = 1;
-		edges = 0;
-		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.bipartite(vertex1, vertex2, edges), "L'erreur n'a pas été lancée.");
-	}
-	
+
 	//Method tested: bipartite
 	//Case: <{V1: v > 0. V2: v > 0, E: e < 0}, {error}>
 	@Test
@@ -151,14 +142,21 @@ class TestACGraphGeneratorTest {
 		vertex1 = 1;
 		vertex2 = -1;
 		edges = -1;
+		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.bipartite(vertex1, vertex2, edges), "L'erreur n'a pas été lancée.");
+	}
+	
+	//Method tested: bipartite
+	//Case: <{V1: v > 0. V2: v > 0, E: e >= 0}, {bipartite graph}>
+	@Test
+	void acceptPositiveVertexPositiveEdges() {
+		vertex1 = 4;
+		vertex2 = 2;
+		edges 	= 3;
 		Graph graph = GraphGenerator.bipartite(vertex1, vertex2, edges);
 		boolean isBipartite = true;
 		Set<Integer> spaceA, spaceB;
-
-		//TODO
 	}
-	
-	
+		
 	
 	
 	
