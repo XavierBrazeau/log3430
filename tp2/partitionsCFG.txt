@@ -1,0 +1,17 @@
+Eulerian :
+E < 0
+V <= 0
+E > 0
+
+Bipartite:
+E > V1 * V2
+E < 0
+V1 + V2 > 0
+E > 0 && E < V1 * V2
+
+Regular:
+V*k % 2 != 0
+V*k % 2 == 0
+V > 0
+k > 0
+V * k / 2 > 0
