@@ -67,7 +67,7 @@ class TestECGraphGenerator {
 		return true;
 	}
 
-	 boolean isBipartite(Graph graph, int src) 
+	boolean isBipartite(Graph graph, int src) 
 	    { 
 	        // Create a color array to store  
 	        // colors assigned to all veritces. 
@@ -134,7 +134,36 @@ class TestECGraphGenerator {
 	        // If we reach here, then all adjacent vertices can 
 	        // be colored with alternate color 
 	        return true; 
-	    } 
+	} 
+	
+	boolean isRegular(Graph graph)
+	 {
+		 int nbNeigh = 0;
+		 Iterator<Integer> it = graph.adj(0).iterator();
+		 
+		 while(it.hasNext())
+		 {
+			 nbNeigh++;
+			 it.next();
+		 }
+		 
+		 for(int i = 1; i < graph.V(); i++)
+		 {
+			 int currentNbNeigh = 0;
+			 it = graph.adj(i).iterator();
+			 
+			 while(it.hasNext())
+			 {
+				 currentNbNeigh++;
+				 it.next();
+			 }
+			 
+			 if(currentNbNeigh != nbNeigh)
+				 return false;
+		 }
+		 
+		 return true;
+	 }
 	 
 	//Method tested: eulerianCycle
 	//Case: <{V: v <= 0}, {error}>
@@ -154,14 +183,6 @@ class TestECGraphGenerator {
 		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.eulerianCycle(vertex1, edges), "L'erreur n'a pas été lancée.");
 	}
 	
-	//Method tested: eulerianCycle
-	//Case: <{V > 1, E: e < v}, {error}>
-	@Test
-	void rejectVertexMoreThanEdgesEulerian() {
-		vertex1 = 2;
-		edges = 1;
-		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.eulerianCycle(vertex1, edges), "L'erreur n'a pas été lancée.");
-	}
 	
 	//Method tested: eulerianCycle
 	//Case: <{V: v = 1. E: e = v}, {Graph with eulerian cycle}>
@@ -169,6 +190,7 @@ class TestECGraphGenerator {
 	void acceptSingleVertexSingleEdgeEulerian() {
 		vertex1 = 1;
 		edges = 1;
+		Graph graph = GraphGenerator.eulerianCycle(vertex1, edges);
 		assertAll("Graph with eulerian cycle",
 				() -> assertNotNull(graph, "Le graphe n'a pas ete genere"),
 				() -> {for (int i = 0; i < vertex1; i++) {
@@ -184,6 +206,7 @@ class TestECGraphGenerator {
 	void rejectVertexLessThanEdgesEulerian() {
 		vertex1 = 2;
 		edges = 3;
+		Graph graph = GraphGenerator.eulerianCycle(vertex1, edges);
 		assertAll("Graph with eulerian cycle",
 				() -> assertNotNull(graph, "Le graphe n'a pas ete genere"),
 				() -> {for (int i = 0; i < vertex1; i++) {
@@ -197,7 +220,7 @@ class TestECGraphGenerator {
  * Bipartite
  *****************************************************************************************************************************/
 	//Method tested: bipartite
-	//Case: <{V1: v < 1}, {error}>
+	//Case: <{V1: v < 0}, {error}>
 	@Test
 	void rejectNegativeVertex1Bipartite() {
 		vertex1 = -1;
@@ -207,7 +230,7 @@ class TestECGraphGenerator {
 	}
 	
 	//Method tested: bipartite
-	//Case: <{V2: v < 1}, {error}>
+	//Case: <{V2: v < 0}, {error}>
 	@Test
 	void rejectNegativeVertex2Bipartite() {
 		vertex1 = 1;
@@ -220,28 +243,26 @@ class TestECGraphGenerator {
 	//Case: <{E: e < 0}, {error}>
 	@Test
 	void rejectNegativeEdgeBipartite() {
-		vertex1 = 1;
-		vertex2 = 1;
+		vertex1 = 0;
+		vertex2 = 0;
 		edges = -1;
 		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.bipartite(vertex1, vertex2, edges), "L'erreur n'a pas été lancée.");
 	}
 	
 	//Method tested: bipartite
-	//Case: <{V1: v = 1, V2: v = 1, E: e = 0}, {Bipartite graph}>
+	//Case: <{V1: v = 0, V2: v = 0, E: e = 0}, {Bipartite graph}>
 		@Test
-	void acceptNoEdgeBipartite() {
-			vertex1 = 1;
-			vertex2 = 1;
+	void rejectNoVertexBipartite() {
+			vertex1 = 0;
+			vertex2 = 0;
 			edges = 0;
 			Graph graph = GraphGenerator.bipartite(vertex1, vertex2, edges);
-			assertAll("Graph bipartite",
-					() -> assertNotNull(graph, "Le graphe n'a pas ete genere"),
-					() -> assertTrue(isBipartite(graph,0))
-			);
+			assertNotNull(graph, "Le graphe n'a pas ete genere");
 		}
+		
 	
 	//Method tested: bipartite
-	//Case: <{V1: v > 1, V2: v > 1, E: e > 0}, {Bipartite graph}>
+	//Case: <{V1: v > 0, V2: v > 0, E: e > 0}, {Bipartite graph}>
 	@Test
 	void acceptMultipleVertexMultipleEdgesBipartite() {
 			vertex1 = 2;
@@ -264,7 +285,17 @@ class TestECGraphGenerator {
 	void rejectNegativeDegreeRegular() {
 		vertex1 = 2;
 		k = -1;
-		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.regular(vertex1, k), "L'erreur n'a pas été lancée.");
+		assertThrows(Exception.class, () -> GraphGenerator.regular(vertex1, k), "L'erreur n'a pas été lancée.");
+	}
+	
+	
+	//Method tested: regular
+	//Case: <{k: k < 0}, {error}>
+	@Test
+	void rejectNegativeVertexRegular() {
+		vertex1 = -2;
+		k = 0;
+		assertThrows(Exception.class, () -> GraphGenerator.regular(vertex1, k), "L'erreur n'a pas été lancée.");
 	}
 	
 	//Method tested: regular
@@ -276,9 +307,7 @@ class TestECGraphGenerator {
 		Graph graph = GraphGenerator.regular(vertex1, k);
 		assertAll("Graph regular",
 				() -> assertNotNull(graph, "Le graphe n'a pas ete genere"),
-				() -> {for(int i = 0; i < vertex1; i++) {
-						assertTrue(graph.degree(i) == k);
-					}}
+				() -> assertTrue(isRegular(graph))
 		);
 	}
 	
@@ -291,9 +320,7 @@ class TestECGraphGenerator {
 		Graph graph = GraphGenerator.regular(vertex1, k);
 		assertAll("Graph regular",
 				() -> assertNotNull(graph, "Le graphe n'a pas ete genere"),
-				() -> {for(int i = 0; i < vertex1; i++) {
-						assertTrue(graph.degree(i) == k);
-					}}
+				() -> assertTrue(isRegular(graph))
 		);
 	}
 	
@@ -303,9 +330,12 @@ class TestECGraphGenerator {
 	void rejectPositiveDegreesWithTooSmallVertexVKPairRegular() {
 		vertex1 = 2;
 		k = 2;
-		assertThrows(IllegalArgumentException.class, () -> GraphGenerator.regular(vertex1, k), "L'erreur n'a pas été lancée.");
+		Graph graph = GraphGenerator.regular(vertex1, k);
+		assertAll("Graph regular",
+				() -> assertNotNull(graph, "Le graphe n'a pas ete genere"),
+				() -> assertTrue(isRegular(graph))
+		);
 	}
-	
 	
 	//Method tested: regular
 	//Case: <{V: V*k impair}, {error}>
