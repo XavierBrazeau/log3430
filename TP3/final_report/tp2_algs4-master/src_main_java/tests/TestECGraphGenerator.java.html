@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TestECGraphGenerator.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestDigraphMaDUM (28-Feb-2019 12:55:26 AM)</a> &gt; <a href="../../index.html" class="el_group">tp2_algs4-master</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">TestECGraphGenerator.java</span></div><h1>TestECGraphGenerator.java</h1><pre class="source lang-java linenums">package tests;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import edu.princeton.cs.algs4.Graph;
+import edu.princeton.cs.algs4.GraphGenerator;
+
+<span class="nc" id="L12">class TestECGraphGenerator {</span>
+
+	int vertex1;
+	int vertex2;
+	int edges;
+	int k;
+	
+	@BeforeEach
+	void setUp() throws Exception {
+<span class="nc" id="L21">	}</span>
+
+	@AfterEach
+	void tearDown() throws Exception {
+<span class="nc" id="L25">	}</span>
+
+	//Method tested: eulerianCycle
+	//Case: &lt;{V: v &lt; 0, E: e &gt;= v }, {error}&gt;
+	@Test
+	void rejectNegativeVertexLessThanEdges() {
+<span class="nc" id="L31">		vertex1 = -1;</span>
+<span class="nc" id="L32">		edges = 0;</span>
+<span class="nc" id="L33">		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.eulerianCycle(vertex1, edges), &quot;L'erreur n'a pas été lancée.&quot;);</span>
+<span class="nc" id="L34">	}</span>
+	
+	//Method tested: eulerianCycle
+	//Case: &lt;{V: v &gt; 0, E: e &lt; V}, {Graph with eulerian cycle}&gt;
+	@Test
+	void acceptPositiveVertexLessEdges() {
+<span class="nc" id="L40">		vertex1 = 5;</span>
+<span class="nc" id="L41">		edges = 4;</span>
+<span class="nc" id="L42">		Graph graph = GraphGenerator.eulerianCycle(vertex1, edges);</span>
+<span class="nc" id="L43">		assertAll(&quot;Graph with eulerian cycle&quot;,</span>
+<span class="nc" id="L44">				() -&gt; assertNotNull(graph, &quot;Le graphe n'a pas ete genere&quot;),</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">				() -&gt; {for (int i = 0; i &lt; vertex1; i++) {</span>
+<span class="nc" id="L46">					assertEquals(0,graph.degree(i)%2, &quot;Le graphe ne contient pas de cycle eulerien&quot;);</span>
+<span class="nc" id="L47">				}}</span>
+		);
+<span class="nc" id="L49">	}</span>
+	
+	//Method tested: bipartite
+	//Case: &lt;{V1: v &lt;= 0. V2: v &lt;= 0, E: e &gt;= 0}, {error}&gt;
+	@Test
+	void rejectNegativeVertex() {
+<span class="nc" id="L55">		vertex1 = -1;</span>
+<span class="nc" id="L56">		vertex2 = -1;</span>
+<span class="nc" id="L57">		edges = 0;</span>
+<span class="nc" id="L58">		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.bipartite(vertex1, vertex2, edges), &quot;L'erreur n'a pas été lancée.&quot;);</span>
+<span class="nc" id="L59">	}</span>
+	
+	//Method tested: bipartite
+	//Case: &lt;{V1: v &gt; 0. V2: v &gt; 0, E: e &lt; 0}, {error}&gt;
+	@Test
+	void rejectNegativeEdges() {
+<span class="nc" id="L65">		vertex1 = 1;</span>
+<span class="nc" id="L66">		vertex2 = 1;</span>
+<span class="nc" id="L67">		edges = -1;</span>
+<span class="nc" id="L68">		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.bipartite(vertex1, vertex2, edges), &quot;L'erreur n'a pas été lancée.&quot;);</span>
+<span class="nc" id="L69">	}</span>
+	
+	//Method tested: regular
+	//Case: &lt;{V: V*k pair &amp;&amp; V &gt;= k + 1, k: k &lt; 0}, {error}&gt;
+	@Test
+	void rejectNegativeDegreesWithValidVertex() {
+<span class="nc" id="L75">		vertex1 = 2;</span>
+<span class="nc" id="L76">		k = -1;</span>
+<span class="nc" id="L77">		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.regular(vertex1, k), &quot;L'erreur n'a pas été lancée.&quot;);</span>
+<span class="nc" id="L78">	}</span>
+	
+	//Method tested: regular
+	//Case: &lt;{V: V*k pair &amp;&amp; V &gt;= k + 1, k: k &lt; 0}, {error}&gt;
+	@Test
+	void rejectNegativeDegreesWithImpairVertex() {
+<span class="nc" id="L84">		vertex1 = 1;</span>
+<span class="nc" id="L85">		k = -1;</span>
+<span class="nc" id="L86">		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.regular(vertex1, k), &quot;L'erreur n'a pas été lancée.&quot;);</span>
+<span class="nc" id="L87">	}</span>
+	
+	//Method tested: regular
+	//Case: &lt;{V: V*k pair &amp;&amp; V &gt;= k + 1, k: k &lt; 0}, {error}&gt;
+	@Test
+	void rejectNegativeDegreesWithTooSmallVertex() {
+<span class="nc" id="L93">		vertex1 = -2;</span>
+<span class="nc" id="L94">		k = -1;</span>
+<span class="nc" id="L95">		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.regular(vertex1, k), &quot;L'erreur n'a pas été lancée.&quot;);</span>
+<span class="nc" id="L96">	}</span>
+	
+	//Method tested: regular
+	//Case: &lt;{V: V*k pair &amp;&amp; V &gt;= k + 1, k: k &lt; 0}, {error}&gt;
+	@Test
+	void rejectPositiveDegreesWithTooSmallImpairVertex() {
+<span class="nc" id="L102">		vertex1 = 1;</span>
+<span class="nc" id="L103">		k = 3;</span>
+<span class="nc" id="L104">		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.regular(vertex1, k), &quot;L'erreur n'a pas été lancée.&quot;);</span>
+<span class="nc" id="L105">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>TestDigraphMaDUM (28-Feb-2019 12:55:26 AM)</div></body></html>

@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TestDigraphMaDUM.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestDigraphMaDUM (28-Feb-2019 12:55:26 AM)</a> &gt; <a href="../../index.html" class="el_group">tp2_algs4-master</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">TestDigraphMaDUM.java</span></div><h1>TestDigraphMaDUM.java</h1><pre class="source lang-java linenums">package tests;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.Iterator;
+
+import edu.princeton.cs.algs4.Digraph;
+import edu.princeton.cs.algs4.GraphGenerator;
+import edu.princeton.cs.algs4.In;
+
+import org.junit.jupiter.api.Test;
+
+<span class="fc" id="L15">class TestDigraphMaDUM {</span>
+	
+	static final int vertex = 13;
+	static final int edges = 22;
+<span class="fc" id="L19">	static final String localUrl = TestDigraphMaDUM.class.getResource(&quot;customGraph.txt&quot;).toString();</span>
+<span class="fc" id="L20">	static final String badUrl1 = TestDigraphMaDUM.class.getResource(&quot;badGraph.txt&quot;).toString();</span>
+<span class="fc" id="L21">	static final String badUrl2 = TestDigraphMaDUM.class.getResource(&quot;badGraph2.txt&quot;).toString();</span>
+<span class="fc" id="L22">	static final String badUrl3 = TestDigraphMaDUM.class.getResource(&quot;badGraph3.txt&quot;).toString();</span>
+/************************************************************************************
+ * Attribute V
+ ***********************************************************************************/
+	@Test
+	void testVConstrV() {
+		// Test Constructor V &amp; Getter V
+<span class="fc" id="L29">		Digraph digraph = new Digraph(vertex);</span>
+<span class="fc" id="L30">		assertEquals(digraph.V(), vertex);</span>
+		
+		//Test validateVertex
+<span class="pc" id="L33">		assertThrows(IllegalArgumentException.class, () -&gt; digraph.addEdge(vertex, vertex));</span>
+<span class="pc" id="L34">		assertThrows(IllegalArgumentException.class, () -&gt; digraph.addEdge(-1, vertex));</span>
+		try {
+<span class="fc" id="L36">			digraph.addEdge(vertex - 1, vertex - 1); //if the method fails the test also fails</span>
+<span class="pc" id="L37">		} catch (IllegalArgumentException e) {fail(&quot;Should not have thrown&quot;);}</span>
+		
+		//Test toString
+<span class="fc" id="L40">		String expectedPrefix = String.valueOf(vertex); </span>
+<span class="fc" id="L41">		assertTrue(digraph.toString().startsWith(expectedPrefix));</span>
+<span class="fc" id="L42">	}</span>
+	
+	@Test
+	void testVConstrIn() {
+		//Setup
+<span class="fc" id="L47">		String url = &quot;https://algs4.cs.princeton.edu/42digraph/tinyDG.txt&quot;;</span>
+<span class="fc" id="L48">		In in = new In(url);</span>
+		
+		// Test Constructor In &amp; Getter V
+<span class="fc" id="L51">		Digraph digraph = new Digraph(in);</span>
+<span class="fc" id="L52">		assertEquals(digraph.V(), vertex);</span>
+		
+		//Test toString
+<span class="fc" id="L55">		String expectedPrefix = String.valueOf(vertex); </span>
+<span class="fc" id="L56">		assertTrue(digraph.toString().startsWith(expectedPrefix));</span>
+		
+		//Test validateVertex
+<span class="pc" id="L59">		assertThrows(IllegalArgumentException.class, () -&gt; digraph.addEdge(vertex, vertex));</span>
+<span class="pc" id="L60">		assertThrows(IllegalArgumentException.class, () -&gt; digraph.addEdge(-1, vertex));</span>
+		try {
+<span class="fc" id="L62">			digraph.addEdge(vertex - 1, vertex - 1); //if the method fails the test also fails</span>
+<span class="pc" id="L63">		} catch (IllegalArgumentException e) {fail(&quot;Should not have thrown&quot;);}</span>
+<span class="fc" id="L64">	}</span>
+	
+	@Test
+	void testVConstrCopy() {
+		//Setup
+<span class="fc" id="L69">		String url = &quot;https://algs4.cs.princeton.edu/42digraph/tinyDG.txt&quot;;</span>
+<span class="fc" id="L70">		In in = new In(url);</span>
+<span class="fc" id="L71">		Digraph copy = new Digraph(in);</span>
+		
+		// Test Constructor Copy &amp; Getter V
+<span class="fc" id="L74">		Digraph digraph = new Digraph(copy);</span>
+<span class="fc" id="L75">		assertEquals(digraph.V(), vertex);</span>
+		
+		//Test validateVertex
+<span class="pc" id="L78">		assertThrows(IllegalArgumentException.class, () -&gt; digraph.addEdge(vertex, vertex));</span>
+<span class="pc" id="L79">		assertThrows(IllegalArgumentException.class, () -&gt; digraph.addEdge(-1, vertex));</span>
+		try {
+<span class="fc" id="L81">			digraph.addEdge(vertex - 1, vertex - 1); //if the method fails the test also fails</span>
+<span class="pc" id="L82">		} catch (IllegalArgumentException e) {fail(&quot;Should not have thrown&quot;);}</span>
+		
+		//Test toString
+<span class="fc" id="L85">		String expectedPrefix = String.valueOf(vertex); </span>
+<span class="fc" id="L86">		assertTrue(digraph.toString().startsWith(expectedPrefix));</span>
+<span class="fc" id="L87">	}</span>
+	
+	
+/************************************************************************************
+ * Attribute E
+ ***********************************************************************************/
+	
+	@Test
+	void testEConstrV() {		
+		// Test Constructor V &amp; Getter E
+<span class="fc" id="L97">		Digraph digraph = new Digraph(vertex);</span>
+<span class="fc" id="L98">		assertEquals(digraph.E(), 0);</span>
+		
+		//Test AddEdge
+<span class="fc" id="L101">		digraph.addEdge(vertex - 1, vertex - 1); </span>
+<span class="fc" id="L102">		assertEquals(digraph.E(), 1);</span>
+		
+		//Test toString
+<span class="fc" id="L105">		String expectedSub = String.valueOf(1) + &quot; edges&quot;; </span>
+<span class="fc" id="L106">		assertTrue(digraph.toString().contains(expectedSub));</span>
+<span class="fc" id="L107">	}</span>
+	
+	@Test
+	void testEConstrIn() {		
+		//Setup
+<span class="fc" id="L112">		String url = &quot;https://algs4.cs.princeton.edu/42digraph/tinyDG.txt&quot;;</span>
+<span class="fc" id="L113">		In in = new In(url);</span>
+		
+		// Test Constructor In &amp; Getter E
+<span class="fc" id="L116">		Digraph digraph = new Digraph(in);</span>
+<span class="fc" id="L117">		assertEquals(digraph.E(), edges);</span>
+		
+		//Test AddEdge
+<span class="fc" id="L120">		digraph.addEdge(vertex - 1, vertex - 1); </span>
+<span class="fc" id="L121">		assertEquals(digraph.E(), edges + 1);</span>
+		
+		//Test toString
+<span class="fc" id="L124">		String expectedSub = String.valueOf(edges + 1) + &quot; edges&quot;; </span>
+<span class="fc" id="L125">		assertTrue(digraph.toString().contains(expectedSub));</span>
+<span class="fc" id="L126">	}</span>
+	
+	@Test
+	void testEConstrCopy() {		
+		//Setup
+<span class="fc" id="L131">		String url = &quot;https://algs4.cs.princeton.edu/42digraph/tinyDG.txt&quot;;</span>
+<span class="fc" id="L132">		In in = new In(url);</span>
+<span class="fc" id="L133">		Digraph copy = new Digraph(in);</span>
+		
+		// Test Constructor In &amp; Getter E
+<span class="fc" id="L136">		Digraph digraph = new Digraph(copy);</span>
+<span class="fc" id="L137">		assertEquals(digraph.E(), edges);</span>
+		
+		//Test AddEdge
+<span class="fc" id="L140">		digraph.addEdge(vertex - 1, vertex - 1); </span>
+<span class="fc" id="L141">		assertEquals(digraph.E(), edges + 1);</span>
+		
+		//Test toString
+<span class="fc" id="L144">		String expectedSub = String.valueOf(edges + 1) + &quot; edges&quot;; </span>
+<span class="fc" id="L145">		assertTrue(digraph.toString().contains(expectedSub));</span>
+<span class="fc" id="L146">	}</span>
+	
+/************************************************************************************
+ * Attribute Adj
+ ***********************************************************************************/
+	
+	@Test
+	void testAdjConstrVAddEdgeReverse() {		
+		// Test Constructor V &amp; Getter Adj
+<span class="fc" id="L155">		Digraph digraph = new Digraph(vertex);</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++)</span>
+<span class="fc" id="L157">			assertFalse(digraph.adj(i).iterator().hasNext());</span>
+		
+		//Test AddEdge
+<span class="fc" id="L160">		int vStart = 0;</span>
+<span class="fc" id="L161">		int vFinish = 1;</span>
+<span class="fc" id="L162">		digraph.addEdge(vStart, vFinish); </span>
+		
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++) {</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">			if(i == vStart) {</span>
+<span class="fc" id="L166">				Iterator&lt;Integer&gt; it = digraph.adj(i).iterator();</span>
+<span class="fc" id="L167">				assertTrue(it.hasNext());</span>
+<span class="fc" id="L168">				int neigh = it.next();</span>
+<span class="fc" id="L169">				assertEquals(neigh, vFinish);</span>
+<span class="fc" id="L170">				assertFalse(it.hasNext());</span>
+<span class="fc" id="L171">			} else {</span>
+<span class="fc" id="L172">				assertFalse(digraph.adj(i).iterator().hasNext());</span>
+			}
+		}
+		
+		//Test Reverse
+<span class="fc" id="L177">		Digraph reversed = digraph.reverse();</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++) {</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">			if(i == vFinish) {</span>
+<span class="fc" id="L180">				Iterator&lt;Integer&gt; it = reversed.adj(i).iterator();</span>
+<span class="fc" id="L181">				assertTrue(it.hasNext());</span>
+<span class="fc" id="L182">				int neigh = it.next();</span>
+<span class="fc" id="L183">				assertEquals(neigh, vStart);</span>
+<span class="fc" id="L184">				assertFalse(it.hasNext());</span>
+<span class="fc" id="L185">			} else {</span>
+<span class="fc" id="L186">				assertFalse(reversed.adj(i).iterator().hasNext());</span>
+			}
+		}
+		
+		//Test toString
+<span class="fc" id="L191">		String expectedSub = String.valueOf(1) + &quot; edges&quot;; </span>
+<span class="fc" id="L192">		assertTrue(digraph.toString().contains(expectedSub));</span>
+<span class="fc" id="L193">		expectedSub = &quot;0: 1&quot;;</span>
+<span class="fc" id="L194">		assertTrue(digraph.toString().contains(expectedSub));</span>
+		
+<span class="fc" id="L196">	}</span>
+	
+	@Test
+	void testAdjConstrInAddEdgeReverse() {		
+		//Setup
+<span class="fc" id="L201">		In in = new In(localUrl);</span>
+		
+		// Test Constructor In &amp; Getter E
+<span class="fc" id="L204">		Digraph digraph = new Digraph(in);</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++)</span>
+<span class="fc" id="L206">			assertFalse(digraph.adj(i).iterator().hasNext());</span>
+		
+		//Test AddEdge
+<span class="fc" id="L209">		int vStart = 1;</span>
+<span class="fc" id="L210">		int vFinish = 0;</span>
+<span class="fc" id="L211">		digraph.addEdge(vStart, vFinish); </span>
+		
+<span class="fc bfc" id="L213" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++) {</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">			if(i == vStart) {</span>
+<span class="fc" id="L215">				Iterator&lt;Integer&gt; it = digraph.adj(i).iterator();</span>
+<span class="fc" id="L216">				assertTrue(it.hasNext());</span>
+<span class="fc" id="L217">				int neigh = it.next();</span>
+<span class="fc" id="L218">				assertEquals(neigh, vFinish);</span>
+<span class="fc" id="L219">				assertFalse(it.hasNext());</span>
+<span class="fc" id="L220">			} else {</span>
+<span class="fc" id="L221">				assertFalse(digraph.adj(i).iterator().hasNext());</span>
+			}
+		}
+		
+		//Test Reverse
+<span class="fc" id="L226">		Digraph reversed = digraph.reverse();</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++) {</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">			if(i == vFinish) {</span>
+<span class="fc" id="L229">				Iterator&lt;Integer&gt; it = reversed.adj(i).iterator();</span>
+<span class="fc" id="L230">				assertTrue(it.hasNext());</span>
+<span class="fc" id="L231">				int neigh = it.next();</span>
+<span class="fc" id="L232">				assertEquals(neigh, vStart);</span>
+<span class="fc" id="L233">				assertFalse(it.hasNext());</span>
+<span class="fc" id="L234">			} else {</span>
+<span class="fc" id="L235">				assertFalse(reversed.adj(i).iterator().hasNext());</span>
+			}
+		}
+		
+		//Test toString
+<span class="fc" id="L240">		String expectedSub = String.valueOf(1) + &quot; edges&quot;; </span>
+<span class="fc" id="L241">		assertTrue(digraph.toString().contains(expectedSub));</span>
+<span class="fc" id="L242">		expectedSub = &quot;1: 0&quot;;</span>
+<span class="fc" id="L243">		assertTrue(digraph.toString().contains(expectedSub));</span>
+<span class="fc" id="L244">	}</span>
+	
+	@Test
+	void testAdjConstrCopyAddEdgeReverse() {		
+		//Setup
+<span class="fc" id="L249">		In in = new In(localUrl);</span>
+<span class="fc" id="L250">		Digraph copy = new Digraph(in);</span>
+		
+		// Test Constructor In &amp; Getter E
+<span class="fc" id="L253">		Digraph digraph = new Digraph(copy);</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++)</span>
+<span class="fc" id="L255">			assertFalse(digraph.adj(i).iterator().hasNext());</span>
+		
+		//Test AddEdge
+<span class="fc" id="L258">		int vStart = 1;</span>
+<span class="fc" id="L259">		int vFinish = 0;</span>
+<span class="fc" id="L260">		digraph.addEdge(vStart, vFinish); </span>
+		
+<span class="fc bfc" id="L262" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++) {</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">			if(i == vStart) {</span>
+<span class="fc" id="L264">				Iterator&lt;Integer&gt; it = digraph.adj(i).iterator();</span>
+<span class="fc" id="L265">				assertTrue(it.hasNext());</span>
+<span class="fc" id="L266">				int neigh = it.next();</span>
+<span class="fc" id="L267">				assertEquals(neigh, vFinish);</span>
+<span class="fc" id="L268">				assertFalse(it.hasNext());</span>
+<span class="fc" id="L269">			} else {</span>
+<span class="fc" id="L270">				assertFalse(digraph.adj(i).iterator().hasNext());</span>
+			}
+		}
+		
+		//Test Reverse
+<span class="fc" id="L275">		Digraph reversed = digraph.reverse();</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++) {</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">			if(i == vFinish) {</span>
+<span class="fc" id="L278">				Iterator&lt;Integer&gt; it = reversed.adj(i).iterator();</span>
+<span class="fc" id="L279">				assertTrue(it.hasNext());</span>
+<span class="fc" id="L280">				int neigh = it.next();</span>
+<span class="fc" id="L281">				assertEquals(neigh, vStart);</span>
+<span class="fc" id="L282">				assertFalse(it.hasNext());</span>
+<span class="fc" id="L283">			} else {</span>
+<span class="fc" id="L284">				assertFalse(reversed.adj(i).iterator().hasNext());</span>
+			}
+		}
+		
+		//Test toString
+<span class="fc" id="L289">		String expectedSub = String.valueOf(1) + &quot; edges&quot;; </span>
+<span class="fc" id="L290">		assertTrue(digraph.toString().contains(expectedSub));</span>
+<span class="fc" id="L291">		expectedSub = &quot;1: 0&quot;;</span>
+<span class="fc" id="L292">		assertTrue(digraph.toString().contains(expectedSub));</span>
+<span class="fc" id="L293">	}</span>
+/************************************************************************************
+ * Attribute indegree
+ ***********************************************************************************/
+	
+	@Test
+	void testIndegreeConstrVAddEdgeReverse() {		
+		// Test Constructor V &amp; Getter Adj
+<span class="fc" id="L301">		Digraph digraph = new Digraph(vertex);</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++)</span>
+<span class="fc" id="L303">			assertEquals(digraph.indegree(i), 0);</span>
+		
+		//Test AddEdge
+<span class="fc" id="L306">		int vStart = 0;</span>
+<span class="fc" id="L307">		int vFinish = 1;</span>
+<span class="fc" id="L308">		digraph.addEdge(vStart, vFinish); </span>
+		
+<span class="fc bfc" id="L310" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++) {</span>
+<span class="fc bfc" id="L311" title="All 2 branches covered.">			if(i == vFinish) {</span>
+<span class="fc" id="L312">				assertEquals(digraph.indegree(i), 1);</span>
+<span class="fc" id="L313">			} else {</span>
+<span class="fc" id="L314">				assertEquals(digraph.indegree(i), 0);</span>
+			}
+		}
+		
+		//Test Reverse
+<span class="fc" id="L319">		Digraph reversed = digraph.reverse();</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++) {</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">			if(i == vStart) {</span>
+<span class="fc" id="L322">				assertEquals(reversed.indegree(i), 1);</span>
+<span class="fc" id="L323">			} else {</span>
+<span class="fc" id="L324">				assertEquals(reversed.indegree(i), 0);</span>
+			}
+		}
+<span class="fc" id="L327">	}</span>
+	
+	@Test
+	void testIndegreeConstrInAddEdgeReverse() {		
+		//Setup
+<span class="fc" id="L332">		In in = new In(localUrl);</span>
+		
+		// Test Constructor In &amp; Getter E
+<span class="fc" id="L335">		Digraph digraph = new Digraph(in);</span>
+<span class="fc bfc" id="L336" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++)</span>
+<span class="fc" id="L337">			assertEquals(digraph.indegree(i), 0);</span>
+		
+		//Test AddEdge
+<span class="fc" id="L340">		int vStart = 0;</span>
+<span class="fc" id="L341">		int vFinish = 1;</span>
+<span class="fc" id="L342">		digraph.addEdge(vStart, vFinish); </span>
+		
+<span class="fc bfc" id="L344" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++) {</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">			if(i == vFinish) {</span>
+<span class="fc" id="L346">				assertEquals(digraph.indegree(i), 1);</span>
+<span class="fc" id="L347">			} else {</span>
+<span class="fc" id="L348">				assertEquals(digraph.indegree(i), 0);</span>
+			}
+		}
+		
+		//Test Reverse
+<span class="fc" id="L353">		Digraph reversed = digraph.reverse();</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++) {</span>
+<span class="fc bfc" id="L355" title="All 2 branches covered.">			if(i == vStart) {</span>
+<span class="fc" id="L356">				assertEquals(reversed.indegree(i), 1);</span>
+<span class="fc" id="L357">			} else {</span>
+<span class="fc" id="L358">				assertEquals(reversed.indegree(i), 0);</span>
+			}
+		}
+<span class="fc" id="L361">	}</span>
+	
+	@Test
+	void testIndegreeConstrCopyAddEdgeReverse() {		
+		//Setup
+<span class="fc" id="L366">		In in = new In(localUrl);</span>
+<span class="fc" id="L367">		Digraph copy = new Digraph(in);</span>
+		
+		// Test Constructor In &amp; Getter E
+<span class="fc" id="L370">		Digraph digraph = new Digraph(copy);</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++)</span>
+<span class="fc" id="L372">			assertEquals(digraph.indegree(i), 0);</span>
+		
+		//Test AddEdge
+<span class="fc" id="L375">		int vStart = 0;</span>
+<span class="fc" id="L376">		int vFinish = 1;</span>
+<span class="fc" id="L377">		digraph.addEdge(vStart, vFinish); </span>
+		
+<span class="fc bfc" id="L379" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++) {</span>
+<span class="fc bfc" id="L380" title="All 2 branches covered.">			if(i == vFinish) {</span>
+<span class="fc" id="L381">				assertEquals(digraph.indegree(i), 1);</span>
+<span class="fc" id="L382">			} else {</span>
+<span class="fc" id="L383">				assertEquals(digraph.indegree(i), 0);</span>
+			}
+		}
+		
+		//Test Reverse
+<span class="fc" id="L388">		Digraph reversed = digraph.reverse();</span>
+<span class="fc bfc" id="L389" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++) {</span>
+<span class="fc bfc" id="L390" title="All 2 branches covered.">			if(i == vStart) {</span>
+<span class="fc" id="L391">				assertEquals(reversed.indegree(i), 1);</span>
+<span class="fc" id="L392">			} else {</span>
+<span class="fc" id="L393">				assertEquals(reversed.indegree(i), 0);</span>
+			}
+		}
+<span class="fc" id="L396">	}</span>
+
+/************************************************************************************
+ * Tests for 100% coverage
+ ***********************************************************************************/
+	@Test
+	void testInvalidConstrV() {		
+		//Setup
+<span class="fc" id="L404">		int invalidV = -1;</span>
+<span class="pc" id="L405">		assertThrows(IllegalArgumentException.class, () -&gt; new Digraph(invalidV));		</span>
+<span class="fc" id="L406">	}</span>
+	
+	@Test
+	void testInvalidConstrIn() {		
+		//Setup
+<span class="fc" id="L411">		In in = new In(badUrl1);</span>
+<span class="fc" id="L412">		In in2 = new In(badUrl2);</span>
+<span class="fc" id="L413">		In in3 = new In(badUrl3);</span>
+<span class="pc" id="L414">		assertThrows(IllegalArgumentException.class, () -&gt; new Digraph(in));</span>
+<span class="pc" id="L415">		assertThrows(IllegalArgumentException.class, () -&gt; new Digraph(in2));</span>
+<span class="pc" id="L416">		assertThrows(IllegalArgumentException.class, () -&gt; new Digraph(in3));</span>
+		
+<span class="fc" id="L418">	}</span>
+	
+	@Test
+	void testOutDegree() {		
+		//Setup
+<span class="fc" id="L423">		In in = new In(localUrl);</span>
+<span class="fc" id="L424">		Digraph copy = new Digraph(in);</span>
+		
+		// Test Constructor In &amp; Getter E
+<span class="fc" id="L427">		Digraph digraph = new Digraph(copy);</span>
+<span class="fc bfc" id="L428" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++)</span>
+<span class="fc" id="L429">			assertEquals(digraph.outdegree(i), 0);</span>
+		
+		//Test AddEdge
+<span class="fc" id="L432">		int vStart = 1;</span>
+<span class="fc" id="L433">		int vFinish = 0;</span>
+<span class="fc" id="L434">		digraph.addEdge(vStart, vFinish); </span>
+		
+<span class="fc bfc" id="L436" title="All 2 branches covered.">		for(int i = 0; i &lt; vertex; i++) {</span>
+<span class="fc bfc" id="L437" title="All 2 branches covered.">			if(i == vStart) {</span>
+<span class="fc" id="L438">				assertEquals(digraph.outdegree(i), 1);</span>
+<span class="fc" id="L439">			} else {</span>
+<span class="fc" id="L440">				assertEquals(digraph.outdegree(i), 0);</span>
+			}
+		}
+<span class="fc" id="L443">	}</span>
+	
+	@Test
+	void testMain() {
+<span class="fc" id="L447">		ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="fc" id="L448">		PrintStream ps = new PrintStream(baos);</span>
+<span class="fc" id="L449">		PrintStream old = System.out;</span>
+<span class="fc" id="L450">		System.setOut(ps);</span>
+		
+<span class="fc" id="L452">		String[] args = {localUrl};</span>
+<span class="fc" id="L453">		Digraph.main(args);</span>
+		
+<span class="fc" id="L455">		System.out.flush();</span>
+<span class="fc" id="L456">		System.setOut(old);</span>
+		
+		// Show what happened
+<span class="fc" id="L459">		In in = new In(localUrl);</span>
+<span class="fc" id="L460">		Digraph d = new Digraph(in);</span>
+<span class="fc" id="L461">		assertEquals(d.toString().trim(), baos.toString().trim());</span>
+<span class="fc" id="L462">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>TestDigraphMaDUM (28-Feb-2019 12:55:26 AM)</div></body></html>

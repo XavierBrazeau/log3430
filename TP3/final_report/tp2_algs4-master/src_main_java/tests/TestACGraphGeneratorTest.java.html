@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>TestACGraphGeneratorTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">TestDigraphMaDUM (28-Feb-2019 12:55:26 AM)</a> &gt; <a href="../../index.html" class="el_group">tp2_algs4-master</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">tests</a> &gt; <span class="el_source">TestACGraphGeneratorTest.java</span></div><h1>TestACGraphGeneratorTest.java</h1><pre class="source lang-java linenums">package tests;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Set;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+<span class="nc" id="L10">;</span>
+import edu.princeton.cs.algs4.Graph;
+import edu.princeton.cs.algs4.GraphGenerator;
+
+class TestACGraphGeneratorTest {
+
+	int vertex1;
+	int vertex2;
+	int edges;
+	int k;
+	
+	@BeforeEach
+<span class="nc" id="L22">	void setUp() throws Exception {</span>
+	}
+
+	@AfterEach
+<span class="nc" id="L26">	void tearDown() throws Exception {</span>
+	}
+
+	//Method tested: eulerianCycle
+	//Case: &lt;{V: v &lt; 0, E: e &gt;= v }, {error}&gt;
+	@Test
+<span class="nc" id="L32">	void rejectNegativeVertexLessThanEdges() {</span>
+		vertex1 = -1;
+		edges = 0;
+		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.eulerianCycle(vertex1, edges), &quot;L'erreur n'a pas été lancée.&quot;);
+	}
+	
+	//Method tested: eulerianCycle
+	//Case: &lt;{V: v &lt; 0, E: e &lt; v }, {error}&gt;
+	@Test
+<span class="nc" id="L41">	void rejectNegativeVertexLessEdges() {</span>
+		vertex1 = -1;
+		edges = -2;
+		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.eulerianCycle(vertex1, edges), &quot;L'erreur n'a pas été lancée.&quot;);
+	}
+	
+	//Method tested: eulerianCycle
+	//Case: &lt;{V: v &gt; 0, E: e &gt;= V}, {Graph with eulerian cycle}&gt;
+	@Test
+<span class="nc" id="L50">	void acceptPositiveVertexEqualEdeges() {</span>
+		vertex1 = 5;
+		edges = 5;
+		Graph graph = GraphGenerator.eulerianCycle(vertex1, edges);
+		assertAll(&quot;Graph with eulerian cycle&quot;,
+				() -&gt; assertNotNull(graph, &quot;Le graphe n'a pas ete genere&quot;),
+				() -&gt; {for (int i = 0; i &lt; vertex1; i++) {
+					assertEquals(0,graph.degree(i)%2, &quot;Le graphe ne contient pas de cycle eulerien&quot;);
+				}}
+		);
+	}
+	
+	//Method tested: eulerianCycle
+	//Case: &lt;{V: v &gt; 0, E: e &lt; V}, {Graph with eulerian cycle}&gt;
+	@Test
+<span class="nc" id="L65">	void acceptPositiveVertexLessEdges() {</span>
+		vertex1 = 5;
+		edges = 4;
+		Graph graph = GraphGenerator.eulerianCycle(vertex1, edges);
+		assertAll(&quot;Graph with eulerian cycle&quot;,
+				() -&gt; assertNotNull(graph, &quot;Le graphe n'a pas ete genere&quot;),
+				() -&gt; {for (int i = 0; i &lt; vertex1; i++) {
+					assertEquals(0,graph.degree(i)%2, &quot;Le graphe ne contient pas de cycle eulerien&quot;);
+				}}
+		);
+	}
+	
+	//Method tested: bipartite
+	//Case: &lt;{V1: v &lt;= 0. V2: v &lt;= 0, E: e &gt;= 0}, {error}&gt;
+	@Test
+<span class="nc" id="L80">	void rejectNegativeVertex() {</span>
+		vertex1 = -1;
+		vertex2 = -1;
+		edges = 0;
+		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.bipartite(vertex1, vertex2, edges), &quot;L'erreur n'a pas été lancée.&quot;);
+	}
+	
+	//Method tested: bipartite
+	//Case: &lt;{V1: v &lt;= 0. V2: v &lt;= 0, E: e &lt; 0}, {error}&gt;
+	@Test
+<span class="nc" id="L90">	void rejectNegativeVertexNegativeEdges() {</span>
+		vertex1 = -1;
+		vertex2 = -1;
+		edges = -1;
+		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.bipartite(vertex1, vertex2, edges), &quot;L'erreur n'a pas été lancée.&quot;);
+	}
+	
+	//Method tested: bipartite
+	//Case: &lt;{V1: v &lt;= 0. V2: v &gt; 0, E: e &gt;= 0}, {error}&gt;
+	@Test
+<span class="nc" id="L100">	void rejectNegativeVertex1() {</span>
+		vertex1 = -1;
+		vertex2 = 1;
+		edges = 0;
+		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.bipartite(vertex1, vertex2, edges), &quot;L'erreur n'a pas été lancée.&quot;);
+	}
+	
+	//Method tested: bipartite
+	//Case: &lt;{V1: v &lt;= 0. V2: v &gt; 0, E: e &lt; 0}, {error}&gt;
+	@Test
+<span class="nc" id="L110">	void rejectNegativeVertex1NegativeEdges() {</span>
+		vertex1 = -1;
+		vertex2 = 1;
+		edges = -1;
+		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.bipartite(vertex1, vertex2, edges), &quot;L'erreur n'a pas été lancée.&quot;);
+	}	
+	
+	//Method tested: bipartite
+	//Case: &lt;{V1: v &gt; 0. V2: v &lt;= 0, E: e &gt;= 0}, {error}&gt;
+	@Test
+<span class="nc" id="L120">	void rejectNegativeVertex2() {</span>
+		vertex1 = 1;
+		vertex2 = -1;
+		edges = 0;
+		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.bipartite(vertex1, vertex2, edges), &quot;L'erreur n'a pas été lancée.&quot;);
+	}
+	
+
+	//Method tested: bipartite
+	//Case: &lt;{V1: v &gt; 0. V2: v &gt; 0, E: e &lt; 0}, {error}&gt;
+	@Test
+<span class="nc" id="L131">	void rejectPositiveVertexNegativeEdges() {</span>
+		vertex1 = 1;
+		vertex2 = 1;
+		edges = -1;
+		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.bipartite(vertex1, vertex2, edges), &quot;L'erreur n'a pas été lancée.&quot;);
+	}	
+	
+	//Method tested: bipartite
+	//Case: &lt;{V1: v &gt; 0. V2: v &lt;= 0, E: e &lt; 0}, {error}&gt;
+	@Test
+<span class="nc" id="L141">	void rejectNegativeVertex2NegativeEdges() {</span>
+		vertex1 = 1;
+		vertex2 = -1;
+		edges = -1;
+		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.bipartite(vertex1, vertex2, edges), &quot;L'erreur n'a pas été lancée.&quot;);
+	}
+	
+	//Method tested: bipartite
+	//Case: &lt;{V1: v &gt; 0. V2: v &gt; 0, E: e &gt;= 0}, {bipartite graph}&gt;
+	@Test
+<span class="nc" id="L151">	void acceptPositiveVertexPositiveEdges() {</span>
+		vertex1 = 4;
+		vertex2 = 2;
+		edges 	= 3;
+		Graph graph = GraphGenerator.bipartite(vertex1, vertex2, edges);
+		boolean isBipartite = true;
+		Set&lt;Integer&gt; spaceA, spaceB;
+	}
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//Method tested: regular
+	//Case: &lt;{V: V*k pair &amp;&amp; V &gt;= k + 1, k: k &lt; 0}, {error}&gt;
+	@Test
+<span class="nc" id="L181">	void rejectNegativeDegreesWithValidVertex() {</span>
+		vertex1 = 2;
+		k = -1;
+		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.regular(vertex1, k), &quot;L'erreur n'a pas été lancée.&quot;);
+	}
+	
+	//Method tested: regular
+	//Case: &lt;{V: V*k pair &amp;&amp; V &gt;= k + 1, k: k &lt; 0}, {error}&gt;
+	@Test
+<span class="nc" id="L190">	void rejectNegativeDegreesWithImpairVertex() {</span>
+		vertex1 = 1;
+		k = -1;
+		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.regular(vertex1, k), &quot;L'erreur n'a pas été lancée.&quot;);
+	}
+	
+	//Method tested: regular
+	//Case: &lt;{V: V*k pair &amp;&amp; V &gt;= k + 1, k: k &lt; 0}, {error}&gt;
+	@Test
+<span class="nc" id="L199">	void rejectNegativeDegreesWithTooSmallVertex() {</span>
+		vertex1 = -2;
+		k = -1;
+		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.regular(vertex1, k), &quot;L'erreur n'a pas été lancée.&quot;);
+	}
+	
+	//Method tested: regular
+	//Case: &lt;{V: V*k pair &amp;&amp; V &gt;= k + 1, k: k &lt; 0}, {error}&gt;
+	@Test
+<span class="nc" id="L208">	void rejectPositiveDegreesWithTooSmallImpairVertex() {</span>
+		vertex1 = 1;
+		k = 3;
+		assertThrows(IllegalArgumentException.class, () -&gt; GraphGenerator.regular(vertex1, k), &quot;L'erreur n'a pas été lancée.&quot;);
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span>TestDigraphMaDUM (28-Feb-2019 12:55:26 AM)</div></body></html>
