@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.AfterEach;
@@ -32,7 +33,14 @@ class TestStack {
 	
 	private void pushWorkedAsIntended() {
 		assertEquals(stack.size(), value);
-		assertEquals(stack.peek().intValue(), value);		
+		assertEquals(stack.peek().intValue(), value);
+		Iterator<Integer> it = stack.iterator();
+		int actual = value;
+		it.forEachRemaining( element -> {
+				assertTrue(value == element);
+				value--;
+				});
+		value = actual;
 	}
 	
 	@Test
