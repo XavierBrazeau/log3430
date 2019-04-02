@@ -1,0 +1,39 @@
+BipartiteXExtended 
+	enfant de BipartiteX
+	composé de Graph
+
+BipartiteX
+	composé de Queue
+	utilise Graph
+	utilise Stack
+
+Graph
+	composé de Bag
+	utilise In
+	utilise Stack
+
+Queue
+	enfant de Iterable
+	composé de Node
+	utilise ListIterator
+
+Stack
+	enfant de Iterable
+	composé de Node
+	utilise ListIterator
+	
+Bag
+	enfant de Iterable
+	composé de Node
+	utilise ListIterator
+
+In
+	composé d'un scanner
+	utilise BufferedInputStream
+	utilise InputStream
+	utilise URL
+	utilise Socket
+	utilise URLConnection
+	utilise File
+	utilise FileInputStream
+		
