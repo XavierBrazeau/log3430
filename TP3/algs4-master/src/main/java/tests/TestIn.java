@@ -7,10 +7,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +26,7 @@ public class TestIn {
 	In in;
 	final String FILE_NAME = System.getProperty("user.dir") + "\\testIn";
 	final String FILE_NAME_ALL = System.getProperty("user.dir") + "\\testInAll";
+	final String URL = "https://algs4.cs.princeton.edu/42digraph/tinyDG.txt";
 	final double THRESHOLD = .0001;
 	
 	void verifyTestFile() {
@@ -43,6 +46,7 @@ public class TestIn {
 		assertEquals(false, in.readBoolean());
 		assertEquals(true, in.readBoolean());
 		assertEquals(false, in.readBoolean());
+		assertEquals(10.1, in.readDouble());
 	}
 	
 	@AfterEach
@@ -56,11 +60,30 @@ public class TestIn {
 		in = new In();
 	}
 	
+	// Constructor - Socket
+	@Test
+	void constructorSocket() {
+		final Socket socket = mock(Socket.class);
+		byte [] mockBytes = {10, 10, 10 ,10, 10};
+        final InputStream inStream = new ByteArrayInputStream(mockBytes);
+        when(socket.getInputStream()).thenReturn(inStream);
+        
+        in = new In(socket);
+		int [] bytes = in.readAllInts();
+		assertEquals(5, bytes.length);
+		for (int i = 0; i < bytes.length; i++)
+			assertEquals(10, bytes[i]);
+	}
+	
 	// Constructor - Url
 	@Test
 	void constructorUrl() throws MalformedURLException {
-		//URL url = new URL("sd");
-		//in = new In(url);
+		URL url = new URL(URL);
+		in = new In(url);
+		String out = in.readAll();
+		assertTrue(out.startsWith("13"));
+		assertEquals(138, out.length());
+		assertEquals("", in.readAll());
 	}
 	
 	// Constructor - File
