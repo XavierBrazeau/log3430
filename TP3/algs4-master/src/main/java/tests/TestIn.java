@@ -16,18 +16,38 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.In;
 
 public class TestIn {
 	
 	In in;
-	static final String FILE_NAME = System.getProperty("user.dir") + "\\testIn";
+	final String FILE_NAME = System.getProperty("user.dir") + "\\testIn";
+	final String FILE_NAME_ALL = System.getProperty("user.dir") + "\\testInAll";
+	final double THRESHOLD = .0001;
 	
 	void verifyTestFile() {
+		assertTrue(in.exists());
+		assertFalse(in.isEmpty());
 		assertTrue(in.hasNextLine());
 		assertEquals("string", in.readLine());
 		assertTrue(in.hasNextChar());
 		assertEquals('a', in.readChar());
+		assertEquals(1, in.readInt());
+		assertTrue(Math.abs(1.1 -in.readFloat()) < THRESHOLD);
+		assertTrue(Math.abs(1.2 -in.readFloat()) < THRESHOLD);
+		assertEquals(10, in.readLong());
+		assertEquals(5, in.readShort());
+		assertEquals(2, in.readByte());
+		assertEquals(true, in.readBoolean());
+		assertEquals(false, in.readBoolean());
+		assertEquals(true, in.readBoolean());
+		assertEquals(false, in.readBoolean());
+	}
+	
+	@AfterEach
+	void close() {
+		in.close();
 	}
 	
 	// Constructor - Standard
@@ -66,6 +86,42 @@ public class TestIn {
 		Scanner sc = new Scanner(f);
 		in = new In(sc);
 		verifyTestFile();
+	}
+	
+	// Read All
+	@Test
+	void readAll() throws FileNotFoundException {
+		File f = new File(FILE_NAME_ALL);
+		in = new In(f);
+		String [] lines = in.readAllLines();
+		
+		assertEquals(5, lines.length);
+		for (int i = 0; i < lines.length; i++)
+			assertEquals("10", lines[i]);
+		
+		in = new In(f);
+		String [] strings = in.readAllStrings();
+		assertEquals(5, strings.length);
+		for (int i = 0; i < strings.length; i++)
+			assertEquals("10", strings[i]);
+		
+		in = new In(f);
+		int [] ints = in.readAllInts();
+		assertEquals(5, ints.length);
+		for (int i = 0; i < ints.length; i++)
+			assertEquals(10, ints[i]);
+		
+		in = new In(f);
+		long [] longs = in.readAllLongs();
+		assertEquals(5, longs.length);
+		for (int i = 0; i < longs.length; i++)
+			assertEquals(10, longs[i]);
+		
+		in = new In(f);
+		double [] doubles = in.readAllDoubles();
+		assertEquals(5, doubles.length);
+		for (int i = 0; i < doubles.length; i++)
+			assertEquals(10.0, doubles[i]);
 	}
 	
 }
