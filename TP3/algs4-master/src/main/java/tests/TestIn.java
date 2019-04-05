@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
