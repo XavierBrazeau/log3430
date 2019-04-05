@@ -58,6 +58,7 @@ public class TestGraph {
 								+ "4: " + System.getProperty("line.separator");
 		Graph graph = new Graph(v);
 		assertEquals(v, graph.V());
+		assertNull(graph.getTypeName());
 		
 		assertEquals(expectedString, graph.toString());
 		assertEquals(0, graph.E());
@@ -82,6 +83,7 @@ public class TestGraph {
 								+ "3: " + System.getProperty("line.separator")
 								+ "4: " + System.getProperty("line.separator");
 		assertEquals(v, graph.V());
+		assertNull(graph.getTypeName());
 		assertEquals(expectedString, graph.toString());
 		assertEquals(0, graph.E());
 		for (int i = 0; i < graph.V(); i++) {
@@ -117,6 +119,7 @@ public class TestGraph {
 
 		Graph graph = new Graph(new In(localUrl));
 		assertEquals(v, graph.V());
+		assertNull(graph.getTypeName());
 		assertEquals(e, graph.E());
 		for (int i = 0; i < graph.V(); i++) {
 			Iterator<Integer> it = graph.adj(i).iterator();
@@ -137,12 +140,19 @@ public class TestGraph {
 		graph.addEdge(0, 1);
 		Graph copy = new Graph(graph);
 		
-		assertEquals(v, graph.V());
-		assertEquals(1, graph.E());
-		for (int i = 0; i < graph.V(); i++) {
-			Iterator<Integer> it = graph.adj(i).iterator(); 
+		assertEquals(copy.V(), graph.V());
+		assertEquals(copy.V(), v);
+		assertEquals(graph.getTypeName(), copy.getTypeName());
+		assertNull(copy.getTypeName());
+		assertEquals(copy.E(), graph.E());
+		assertEquals(copy.E(), 1);
+		for (int i = 0; i < copy.V(); i++) {
+			Iterator<Integer> it = copy.adj(i).iterator();
+			Iterator<Integer> itOriginal = graph.adj(i).iterator();
 			assertFalse((i == 0 || i == 1) ? !it.hasNext(): it.hasNext());
 			assertEquals((i == 0 || i == 1) ? 1 : 0, graph.degree(i));
+			assertEquals(copy.degree(i), graph.degree(i));
+			assertEquals(it.hasNext(), itOriginal.hasNext());
 		}
 		String expectedString = "5 vertices, 1 edges " + System.getProperty("line.separator")
 						+ "0: 1 " + System.getProperty("line.separator")
@@ -151,5 +161,23 @@ public class TestGraph {
 						+ "3: " + System.getProperty("line.separator")
 						+ "4: " + System.getProperty("line.separator");
 		assertEquals(expectedString, graph.toString());
+	}
+	
+	// Testing setTypeName
+	@Test
+	void setTypeNameValid() {
+		final int v = 5;
+		final String type = "test";
+		
+		Graph graph = new Graph(v);
+		assertEquals(graph.V(), v);
+		assertEquals(graph.E(), 0);
+		assertNull(graph.getTypeName());
+		
+		graph.setTypeName(type);
+		
+		assertEquals(graph.V(), v);
+		assertEquals(graph.E(), 0);
+		assertEquals(graph.getTypeName(), type);
 	}
 }

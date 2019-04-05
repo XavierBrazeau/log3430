@@ -7,10 +7,11 @@ import java.util.Iterator;
 import edu.princeton.cs.algs4.Graph;
 import edu.princeton.cs.algs4.BipartiteX;
 
+import org.mockito.*;
 
 import org.junit.jupiter.api.Test;
 
-class testBipartiteXOld {
+class testBipartiteX {
 	
 	@Test
 	void testNonBipartite() {
@@ -55,12 +56,9 @@ class testBipartiteXOld {
 		
 		graph.addEdge(0, 1);
 		
-		
 		BipartiteX bipartite = new BipartiteX(graph);
 		assertTrue(bipartite.isBipartite());
-		
 		assertNull(bipartite.oddCycle());
-		
 		assertNotEquals(bipartite.color(0),bipartite.color(1));
 	}
 	
@@ -69,29 +67,20 @@ class testBipartiteXOld {
 		Graph graph = new Graph(2);
 		
 		graph.addEdge(0, 1);
-		
-		
+				
 		BipartiteX bipartite = new BipartiteX(graph);
 		
-		try {
-			bipartite.color(2);
-		}catch(IllegalArgumentException e) {
-			assertNotNull(e);
-		}
-		
-		try {
-			bipartite.color(-1);
-		}catch(IllegalArgumentException e) {
-			assertNotNull(e);
-		}
-		
-		
+		assertThrows(IllegalArgumentException.class, () -> bipartite.color(2));
+		assertThrows(IllegalArgumentException.class, () -> bipartite.color(-1));
+
 	}
 	
 
 	@Test
 	void testOddCycle() {
 		Graph graph = new Graph(5);
+		Integer[] expectedOddCycle = { new Integer(2), new Integer(1), new Integer(4), new Integer(2) };
+
 		
 		graph.addEdge(0, 1);
 		graph.addEdge(1, 2);
@@ -99,8 +88,6 @@ class testBipartiteXOld {
 		graph.addEdge(3, 4);
 		graph.addEdge(4, 2);
 		graph.addEdge(4, 1);
-		
-		Integer[] expectedOddCycle = { new Integer(2), new Integer(1), new Integer(4), new Integer(1)};
 		
 		
 		BipartiteX bipartite = new BipartiteX(graph);
@@ -110,8 +97,17 @@ class testBipartiteXOld {
 		int i = 0;;
 		while (it.hasNext()) {
 			assertEquals(it.next(), expectedOddCycle[i++]);
-		}
-		
+		}	
 	}
-
+	
+	// Testing the check method when isBipartite is a flase true
+	@Test
+	void checkFalseBipartite() {
+		Graph graph = new Graph(2);
+		graph.addEdge(0, 1);
+		BipartiteX bipartite = new BipartiteX(graph);
+		
+		BipartiteX spy = spy(bipartite);
+	}
 }
+
