@@ -91,4 +91,18 @@ public class TestQueue {
 		q.dequeue();
 		assertThrows(NoSuchElementException.class, () -> q.peek());
 	}
+	
+	// Try to go next when no element
+	@Test
+	void nextToNull() {
+		Iterator<Integer> it = q.iterator();
+		assertThrows(NoSuchElementException.class, () -> it.next());
+	}
+	
+	// Try to remove with the iterator
+	@Test
+	void removeOnIterator() {
+		Iterator<Integer> it = q.iterator();
+		assertThrows(UnsupportedOperationException.class, () -> it.remove());
+	}
 }

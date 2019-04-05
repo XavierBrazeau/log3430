@@ -1,0 +1,236 @@
+commit bab49ca2f32dfbd394ccf971cc0a79984cc1d956
+Author: Xavier Brazeau <brazeaux@hotmail.ca>
+Date:   Thu Apr 4 19:05:33 2019 -0400
+
+    ajout de la partie à xav presque finie
+
+commit 3f93098a953bf72d925bf7e9d41e5a67bd421b59
+Author: Xavier Brazeau <brazeaux@hotmail.ca>
+Date:   Thu Apr 4 13:08:33 2019 -0400
+
+    ajout de bipartiteX et bipartiteXExtended
+
+commit 6d5df8f7154ee00ef0d3bacb4f9e74b41a00c683
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Wed Apr 3 21:48:44 2019 -0400
+
+    MxB : Add graph test
+
+commit fe012a9ec2196a6a7ef3ecd6f3322a085c61434a
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Wed Apr 3 19:04:26 2019 -0400
+
+    MxB (T): Queue tested
+
+commit afc909aaf957a181d14b55a3adb82111a7aef1c3
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Mon Apr 1 23:19:19 2019 -0400
+
+    MxB: File in tp3 for BipartiteXExtended.
+
+commit afa87b510bd16861766333e2a58dcd7647c1730a
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Tue Mar 19 19:16:37 2019 -0400
+
+    MxB: JaCoCo image expand
+
+commit 7d856ab3c964fa5603ff9c4ac679250db37f8c6f
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Tue Mar 19 19:04:28 2019 -0400
+
+    MxB: JaCoCo image
+
+commit 43dfe0f4fb07f8092691aa31ef0a97b4c518e6bf
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Tue Mar 19 18:58:53 2019 -0400
+
+    MxB: now look all element in stack
+
+commit 6d71132cfe9d99e60880037ff63a48a850d35a82
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Tue Mar 19 18:07:29 2019 -0400
+
+    MxB: StackDiagram png
+
+commit 667dbb14821f908771c367717f71f104a01ce51b
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Tue Mar 19 18:04:08 2019 -0400
+
+    MxB: Tout est présent
+
+commit aaf269117f53f6a6275d9378ee44b5a10b709310
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Tue Mar 19 16:30:48 2019 -0400
+
+    MxB: Image tree
+
+commit bc608de0678bf2736307ab3b4397abacf7685704
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Tue Mar 19 16:20:01 2019 -0400
+
+    MxB: Ajout tp4
+
+commit d5bc53dfed9b13052364e66e5b04cac28018659f
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Thu Feb 28 21:39:25 2019 -0500
+
+    MxB: tp3 end
+
+commit 596f4cb2c71531695a44c095145897d3ccd9bf38
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Thu Feb 28 14:40:49 2019 -0500
+
+    MxB: Add report
+
+commit 6ff20f7b9591ca8c4acd06d069558a60b28d61cf
+Author: Amine Kamal <m.amine.kamal@gmail.com>
+Date:   Thu Feb 28 01:04:24 2019 -0500
+
+    TP3 Q1 & Q2 done
+
+commit e8f9ba5c30b28a0c28ee4620fc8abfd2f6e62612
+Author: Xavier Brazeau <brazeaux@hotmail.ca>
+Date:   Fri Feb 15 11:24:53 2019 -0500
+
+    draft tp3
+
+commit 6ffe564fb89673b8053bf5dffbd3725f91ca79d4
+Author: XavierBrazeau <43451355+XavierBrazeau@users.noreply.github.com>
+Date:   Thu Feb 14 09:59:43 2019 -0500
+
+    Add files via upload
+
+commit 2bc8548122b31396a7cdf02df32388705a07f23c
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Thu Feb 14 09:58:09 2019 -0500
+
+    MxB: page de presentation
+
+commit f263844ebc388991f3a8ab52922d2991f8545d82
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Thu Feb 14 09:53:45 2019 -0500
+
+    MxB: add cfg
+
+commit 56d59b0b3ad2dee398974e7e0a43fb5cd4b7bfcf
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Thu Feb 14 09:41:22 2019 -0500
+
+    MxB: RApport
+
+commit 63e5aa2d03b71039cede1742f905ee52de81c216
+Author: XavierBrazeau <43451355+XavierBrazeau@users.noreply.github.com>
+Date:   Wed Feb 13 19:38:25 2019 -0500
+
+    Add files via upload
+
+commit 6d5fc422ffdb2c8d4b7a34648aa0cdd051a92a07
+Author: mokamg <m.amine.kamal@gmail.com>
+Date:   Wed Feb 13 19:08:36 2019 -0500
+
+    added partitions for full CFG
+
+commit 3fd9073d3081c4fcd51e5bf432b6f2bfd5909b56
+Author: mokamg <m.amine.kamal@gmail.com>
+Date:   Wed Feb 13 18:53:19 2019 -0500
+
+    Added CFG graphs
+
+commit 867d06e29be8c2c2209419fed90fccd094915719
+Author: XavierBrazeau <43451355+XavierBrazeau@users.noreply.github.com>
+Date:   Wed Feb 13 17:02:40 2019 -0500
+
+    added tests
+
+commit e8efa33b1b4418db86cd7d53668d3bedf236ffe7
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Wed Feb 13 13:29:50 2019 -0500
+
+    MXB: ...
+
+commit ad9fc4f117a3ffe659f9ddd8885c27ebfb2dca54
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Fri Feb 1 12:58:17 2019 -0500
+
+    MxB: Must do success bipartite
+
+commit 314d05199c5a6e3fb061913c6a8d9b402c491987
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Fri Feb 1 12:33:47 2019 -0500
+
+    MxB: AC eulerian complete
+
+commit ae3916086c992660bc0de7de4f89c04dc3d1dc14
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Fri Feb 1 12:26:11 2019 -0500
+
+    MxB: finish EC tests
+
+commit b14a2283aab987ec5ca751db3628467688001a4a
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Fri Feb 1 12:02:16 2019 -0500
+
+    MxB: first lab result
+
+commit b21a6c9982a30f424e4e97acbc6cd2ef38ae9ca8
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Fri Feb 1 08:57:22 2019 -0500
+
+    MxB: add tp2
+
+commit a1ad6c0f43cfe01b4e780cb05b97e8241f40d3be
+Merge: 757d807 32bd616
+Author: Xavier Brazeau <brazeaux@hotmail.ca>
+Date:   Wed Jan 30 16:21:28 2019 -0500
+
+    program final
+
+commit 757d80778b6c81b3e62fc52d0218d1428bc3b414
+Merge: b9afbdc f5a681b
+Author: Xavier Brazeau <brazeaux@hotmail.ca>
+Date:   Wed Jan 30 13:05:52 2019 -0500
+
+    lol
+
+commit 32bd6168ecdb187f9c84adbc5fec7388121bc027
+Author: mokamg <m.amine.kamal@gmail.com>
+Date:   Mon Jan 21 16:09:07 2019 -0500
+
+    update
+
+commit b9afbdc8e7546d6dfcc987cd1daa7bd211f7e187
+Author: Xavier Brazeau <brazeaux@hotmail.ca>
+Date:   Mon Jan 21 15:22:30 2019 -0500
+
+    lol
+
+commit f5a681bcd2da871733d138134321bb7200f8ef6e
+Author: Maxime Bernier <maxime.bernier@polymtl.ca>
+Date:   Mon Jan 21 15:19:05 2019 -0500
+
+    update fichier test
+
+commit f7a51664630dac7c60fd0f702afbcb273058f780
+Merge: 249288b 3e7bd66
+Author: Xavier Brazeau <brazeaux@hotmail.ca>
+Date:   Sat Jan 19 12:24:33 2019 -0500
+
+    lol
+
+commit 249288b8518f74cbd2a0af411455773624800911
+Author: Xavier Brazeau <brazeaux@hotmail.ca>
+Date:   Sat Jan 19 12:22:34 2019 -0500
+
+    début
+
+commit 3e7bd66af041459c9382078f85530fd1a9d2948a
+Author: mokamg <m.amine.kamal@gmail.com>
+Date:   Fri Jan 18 12:05:42 2019 -0500
+
+    version initiale
+
+commit e4e4774e7f4a34b3be9efa02449ee1203214ce7c
+Author: Amine Kamal <m.amine.kamal@gmail.com>
+Date:   Fri Jan 18 08:58:56 2019 -0500
+
+    Ajout TP1
