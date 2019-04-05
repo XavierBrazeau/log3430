@@ -18,11 +18,17 @@ import org.junit.jupiter.api.Test;
 
 import edu.princeton.cs.algs4.In;
 
-
 public class TestIn {
 	
 	In in;
+	static final String FILE_NAME = System.getProperty("user.dir") + "\\testIn";
 	
+	void verifyTestFile() {
+		assertTrue(in.hasNextLine());
+		assertEquals("string", in.readLine());
+		assertTrue(in.hasNextChar());
+		assertEquals('a', in.readChar());
+	}
 	
 	// Constructor - Standard
 	@Test
@@ -33,30 +39,33 @@ public class TestIn {
 	// Constructor - Url
 	@Test
 	void constructorUrl() throws MalformedURLException {
-		URL url = new URL("sd");
-		in = new In(url);
+		//URL url = new URL("sd");
+		//in = new In(url);
 	}
 	
 	// Constructor - File
 	@Test
 	void constructorFile() {
-		File f = new File("sd");
+		File f = new File(FILE_NAME);
 		in = new In(f);
+		verifyTestFile();
 	}
 	
 	// Constructor - String
 	@Test
 	void constructorString() {
-		String s = "dsd";
+		String s = FILE_NAME;
 		in = new In(s);
+		verifyTestFile();
 	}
 	
 	// Constructor - Scanner
 	@Test
 	void constructorScanner() throws FileNotFoundException {
-		File f = new File("sd");
+		File f = new File(FILE_NAME);
 		Scanner sc = new Scanner(f);
 		in = new In(sc);
+		verifyTestFile();
 	}
 	
 }
