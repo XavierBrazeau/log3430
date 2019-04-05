@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.Socket;
@@ -24,8 +25,8 @@ import edu.princeton.cs.algs4.In;
 public class TestIn {
 	
 	In in;
-	final String FILE_NAME = System.getProperty("user.dir") + "\\testIn";
-	final String FILE_NAME_ALL = System.getProperty("user.dir") + "\\testInAll";
+	final String FILE_NAME = TestIn.class.getResource("testIn").toString();
+	final String FILE_NAME_ALL = TestIn.class.getResource("testInAll").toString();
 	final String URL = "https://algs4.cs.princeton.edu/42digraph/tinyDG.txt";
 	final double THRESHOLD = .0001;
 	
@@ -62,8 +63,8 @@ public class TestIn {
 	
 	// Constructor - Socket
 	@Test
-	void constructorSocket() {
-		final Socket socket = mock(Socket.class);
+	void constructorSocket() throws IOException {
+		Socket socket = mock(Socket.class);
 		byte [] mockBytes = {10, 10, 10 ,10, 10};
         final InputStream inStream = new ByteArrayInputStream(mockBytes);
         when(socket.getInputStream()).thenReturn(inStream);
