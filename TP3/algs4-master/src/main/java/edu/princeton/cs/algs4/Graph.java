@@ -67,6 +67,7 @@ public class Graph {
     private final int V;
     private int E;
     private Bag<Integer>[] adj;
+    private String _typeName;
     
     /**
      * Initializes an empty graph with {@code V} vertices and 0 edges.
@@ -222,6 +223,14 @@ public class Graph {
             s.append(NEWLINE);
         }
         return s.toString();
+    }
+    
+    public String getTypeName() {
+    	return _typeName;
+    }
+    
+    public void setTypeName(String typeName) {
+    	_typeName = typeName;
     }
 
 

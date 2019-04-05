@@ -34,6 +34,15 @@ public class BipartiteXExtended extends BipartiteX {
         }
         return Vertices;
     }
+	
+	public List<Integer> getPartitionA() {
+		List<Integer> partitionA = new ArrayList<>();
+		for (int v = 0; v < myGraph.V(); v++) {
+			if(color(v)) { partitionA.add(v); };
+		}
+		
+		return partitionA;
+	}
 
 	
 	   public static void main(String[] args) {

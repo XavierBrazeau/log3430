@@ -73,6 +73,7 @@ public class GraphGenerator {
                 G.addEdge(v, w);
             }
         }
+        G.setTypeName("simple");
         return G;
     }
 
@@ -94,6 +95,7 @@ public class GraphGenerator {
             for (int w = v+1; w < V; w++)
                 if (StdRandom.bernoulli(p))
                     G.addEdge(v, w);
+        G.setTypeName("simple");
         return G;
     }
 
@@ -147,6 +149,7 @@ public class GraphGenerator {
                 G.addEdge(vertices[i], vertices[j]);
             }
         }
+        G.setTypeName("bipartite");
         return G;
     }
 
@@ -172,6 +175,7 @@ public class GraphGenerator {
             for (int j = 0; j < V2; j++)
                 if (StdRandom.bernoulli(p))
                     G.addEdge(vertices[i], vertices[V1+j]);
+        G.setTypeName("bipartite");
         return G;
     }
 
@@ -189,6 +193,7 @@ public class GraphGenerator {
         for (int i = 0; i < V-1; i++) {
             G.addEdge(vertices[i], vertices[i+1]);
         }
+        G.setTypeName("path");
         return G;
     }
 
@@ -206,6 +211,7 @@ public class GraphGenerator {
         for (int i = 1; i < V; i++) {
             G.addEdge(vertices[i], vertices[(i-1)/2]);
         }
+        G.setTypeName("binaryTree");
         return G;
     }
 
@@ -224,6 +230,7 @@ public class GraphGenerator {
             G.addEdge(vertices[i], vertices[i+1]);
         }
         G.addEdge(vertices[V-1], vertices[0]);
+        G.setTypeName("cycle");
         return G;
     }
 
@@ -249,6 +256,7 @@ public class GraphGenerator {
             G.addEdge(vertices[i], vertices[i+1]);
         }
         G.addEdge(vertices[E-1], vertices[0]);
+        G.setTypeName("eulerianCycle");
         return G;
     }
 
@@ -273,6 +281,7 @@ public class GraphGenerator {
         for (int i = 0; i < E; i++) {
             G.addEdge(vertices[i], vertices[i+1]);
         }
+        G.setTypeName("eulerianPath");
         return G;
     }
 
@@ -300,7 +309,7 @@ public class GraphGenerator {
         for (int i = 1; i < V; i++) {
             G.addEdge(vertices[0], vertices[i]);
         }
-
+        G.setTypeName("wheel");
         return G;
     }
 
@@ -322,6 +331,7 @@ public class GraphGenerator {
         for (int i = 1; i < V; i++) {
             G.addEdge(vertices[0], vertices[i]);
         }
+        G.setTypeName("star");
 
         return G;
     }
@@ -352,6 +362,7 @@ public class GraphGenerator {
         for (int i = 0; i < V*k/2; i++) {
             G.addEdge(vertices[2*i], vertices[2*i + 1]);
         }
+        G.setTypeName("regular");
         return G;
     }
 
@@ -398,6 +409,7 @@ public class GraphGenerator {
             if (degree[prufer[i]] == 1) pq.insert(prufer[i]);
         }
         G.addEdge(pq.delMin(), pq.delMin());
+        G.setTypeName("tree");
         return G;
     }
 
