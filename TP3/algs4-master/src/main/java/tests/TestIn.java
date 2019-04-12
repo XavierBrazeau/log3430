@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringBufferInputStream;
 import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
@@ -22,11 +23,22 @@ import org.junit.jupiter.api.Test;
 import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.In;
 
+
 public class TestIn {
 	
+	private class SocketMock extends Socket {
+		public final String EXPECTED_STRING = "TEST";
+		@SuppressWarnings("deprecation")
+		public InputStream getInputStream() {
+			String mockBytes = this.EXPECTED_STRING;
+	        InputStream inStream = new StringBufferInputStream(mockBytes);
+	        
+	        return inStream;
+		}
+	}
 	In in;
-	final String FILE_NAME = TestIn.class.getResource("testIn").toString();
-	final String FILE_NAME_ALL = TestIn.class.getResource("testInAll").toString();
+	final String FILE_NAME = TestIn.class.getResource("testIn").getFile();
+	final String FILE_NAME_ALL = TestIn.class.getResource("testInAll").getFile();
 	final String URL = "https://algs4.cs.princeton.edu/42digraph/tinyDG.txt";
 	final double THRESHOLD = .0001;
 	
@@ -64,16 +76,10 @@ public class TestIn {
 	// Constructor - Socket
 	@Test
 	void constructorSocket() throws IOException {
-		Socket socket = mock(Socket.class);
-		byte [] mockBytes = {10, 10, 10 ,10, 10};
-        final InputStream inStream = new ByteArrayInputStream(mockBytes);
-        when(socket.getInputStream()).thenReturn(inStream);
+		SocketMock socket = new SocketMock();
         
         in = new In(socket);
-		int [] bytes = in.readAllInts();
-		assertEquals(5, bytes.length);
-		for (int i = 0; i < bytes.length; i++)
-			assertEquals(10, bytes[i]);
+		assertEquals(in.readAll(), socket.EXPECTED_STRING);
 	}
 	
 	// Constructor - Url
