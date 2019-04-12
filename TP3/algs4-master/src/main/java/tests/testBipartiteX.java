@@ -7,9 +7,9 @@ import java.util.Iterator;
 import edu.princeton.cs.algs4.Graph;
 import edu.princeton.cs.algs4.BipartiteX;
 
-import org.mockito.*;
-
 import org.junit.jupiter.api.Test;
+
+import org.mockito.*;
 
 class testBipartiteX {
 	
@@ -98,16 +98,6 @@ class testBipartiteX {
 		while (it.hasNext()) {
 			assertEquals(it.next(), expectedOddCycle[i++]);
 		}	
-	}
-	
-	// Testing the check method when isBipartite is a flase true
-	@Test
-	void checkFalseBipartite() {
-		Graph graph = new Graph(2);
-		graph.addEdge(0, 1);
-		BipartiteX bipartite = new BipartiteX(graph);
-		
-		BipartiteX spy = spy(bipartite);
 	}
 }
 

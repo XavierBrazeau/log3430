@@ -37,7 +37,7 @@ public class TestBag {
 	void verifyBag(int current, int expectedSize) {
 		assertFalse(b.isEmpty());
 		assertTrue(b.iterator().hasNext());
-		assertEquals(current, b.iterator().next());
+		assertTrue(current == b.iterator().next());
 		assertEquals(expectedSize, b.size());
 	}
 	
